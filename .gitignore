@@ -39,3 +39,6 @@ Thumbs.db
 
 #NDK
 obj/
+
+#singing
+signing.properties
