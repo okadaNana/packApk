@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
 
+def packageTime() {
+    return new Date().format("yyyyMMdd-hhmmss", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     signingConfigs {
         release {
-
         }
     }
 
@@ -44,8 +47,8 @@ android {
     if (propFile.exists()) {
         def Properties props = new Properties()
         props.load(new FileInputStream(propFile))
-        if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
-                props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+        if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD')
+            && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
             android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
             android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
             android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
@@ -55,6 +58,22 @@ android {
         }
     } else {
         android.buildTypes.release.signingConfig = null
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                File outputDirectory = new File(outputFile.parent);
+                def fileName
+                if (variant.buildType.name == "release") {
+                    fileName = "app_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                } else {
+                    fileName = "app_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${packageTime()}_debug.apk"
+                }
+                output.outputFile = new File(outputDirectory, fileName)
+            }
+        }
     }
 }
 
