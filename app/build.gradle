@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def packageTime() {
-    return new Date().format("yyyyMMdd-hhmmss", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
 android {
@@ -21,7 +21,7 @@ android {
         versionName "1.0"
     }
 
-    buildTypes {
+    buildTypes { // buildTypes 配置
         release {
             zipAlignEnabled true
             minifyEnabled true
@@ -31,7 +31,7 @@ android {
         }
     }
 
-    productFlavors {
+    productFlavors {  // 渠道配置
         baidu {}
         google {}
         wandoujia {}
@@ -43,7 +43,7 @@ android {
         flavor.manifestPlaceholders = [UMENG_CHANNEL_ID: flavor.name]
     }
 
-    File propFile = file('signing.properties');
+    File propFile = file('signing.properties');  // 签名配置
     if (propFile.exists()) {
         def Properties props = new Properties()
         props.load(new FileInputStream(propFile))
@@ -62,6 +62,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
+            // 重命名产出的apk文件
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 File outputDirectory = new File(outputFile.parent);
@@ -72,6 +73,13 @@ android {
                     fileName = "app_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${packageTime()}_debug.apk"
                 }
                 output.outputFile = new File(outputDirectory, fileName)
+            }
+
+            // 删除unaligned apk
+            if (output.zipAlign != null) {
+                output.zipAlign.doLast {
+                    output.zipAlign.inputFile.delete()
+                }
             }
         }
     }
