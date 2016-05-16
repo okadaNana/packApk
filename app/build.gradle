@@ -23,11 +23,16 @@ android {
 
     buildTypes { // buildTypes 配置
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             zipAlignEnabled true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
         }
     }
 
