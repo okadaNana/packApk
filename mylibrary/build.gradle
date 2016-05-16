@@ -21,6 +21,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile rootProject.ext.support_v7
-    compile rootProject.ext.eventbus
+    compile rootProject.ext.dependencies['support_v7']
+    compile rootProject.ext.dependencies['eventbus']
 }

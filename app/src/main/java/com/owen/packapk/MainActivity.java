@@ -8,6 +8,8 @@ import com.owen.packapk.api.ApiContact;
 import com.owen.packapk.utils.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "packApk_MainActivity";
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_main);
         LogUtil.d("这是一条Log日志");
         Log.d(TAG, "server: " + ApiContact.BASE_URL);
@@ -30,5 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }
