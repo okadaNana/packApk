@@ -19,6 +19,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
 
     buildTypes { // buildTypes 配置
@@ -97,4 +98,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.support_v7
     compile rootProject.ext.eventbus
+    compile rootProject.ext.multidex
 }
