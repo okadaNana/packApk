@@ -7,6 +7,6 @@ import com.owen.packapk.BuildConfig;
  */
 public class ApiContact {
 
-    public static final String BASE_URL = BuildConfig.SERVER_URL_DEBUG ? "开发环境" : "生产环境";
+    public static final String BASE_URL = BuildConfig.SERVER_URL;
 
 }
