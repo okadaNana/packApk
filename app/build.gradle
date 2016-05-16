@@ -24,6 +24,7 @@ android {
     buildTypes { // buildTypes 配置
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "SERVER_URL_DEBUG", "false"
             zipAlignEnabled true
             minifyEnabled true
             shrinkResources true
@@ -33,6 +34,7 @@ android {
 
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "SERVER_URL_DEBUG", "true"
         }
     }
 
