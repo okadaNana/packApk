@@ -26,6 +26,7 @@ android {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SERVER_URL", "\"http://api.release.com\""
+            resValue "string", "UMENG_APPKEY", rootProject.ext.umeng['umeng_appkey_release']
             zipAlignEnabled true
             minifyEnabled true
             shrinkResources true
@@ -36,6 +37,7 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SERVER_URL", "\"http://api.debug.com\""
+            resValue "string", "UMENG_APPKEY", rootProject.ext.umeng['umeng_appkey_debug']
         }
     }
 

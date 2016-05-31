@@ -4,4 +4,9 @@ ext {
             'eventbus'   : 'org.greenrobot:eventbus:3.0.0',
             'multidex'   : 'com.android.support:multidex:1.0.0'
     ]
+
+    umeng = [
+            'umeng_appkey_debug'   : 'abcdefg',
+            'umeng_appkey_release' : 'hjklmn'
+    ]
 }
